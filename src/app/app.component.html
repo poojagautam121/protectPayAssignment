@@ -1,0 +1,40 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<div>
+<form [formGroup]="userForm">
+<div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Enter Name</mat-label>
+    <input matInput placeholder="Name" value="" formControlName="userName">
+  </mat-form-field>
+  
+
+</div>
+<div>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Search</button>
+</div>
+</form>
+</div>
+
+<div *ngIf="isDetail">
+  <h2>Deails By Name :</h2>
+  <div >
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Count</th>
+      </tr>
+      <tr>
+        <td>{{details.name}}</td>
+        <td>{{details.age}}</td>
+        <td>{{details.count}}</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+<router-outlet></router-outlet>
