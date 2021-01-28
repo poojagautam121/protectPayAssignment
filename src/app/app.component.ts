@@ -1,5 +1,10 @@
-import { Component } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { AppService } from "./app.service";
 
 @Component({
@@ -7,27 +12,28 @@ import { AppService } from "./app.service";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = "nameApp";
-  userForm: FormGroup;
   details: any;
   isDetail: boolean = false;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private appService: AppService
-  ) {}
+  userName = new FormControl("", [Validators.required]);
 
-  ngOnInit() {
-    this.userForm = this.formBuilder.group({
-      userName: [" ", Validators.required],
-    });
+  validationMessages: { [key: string]: { [key: string]: string } };
+
+  constructor(private _fb: FormBuilder, private appService: AppService) {
+    this.validationMessages = {
+      userName: {
+        required: "This field is required",
+      },
+    };
   }
 
+  ngOnInit() {}
+
   onSubmit() {
-    let value = this.userForm.get("userName").value;
-    if (value != "") {
-      this.appService.name = value;
+    if (this.userName.valid) {
+      this.appService.name = this.userName.value;
       this.getAllCommits();
     } else {
       this.isDetail = false;
@@ -40,5 +46,10 @@ export class AppComponent {
       this.isDetail = true;
       console.log(this.details);
     });
+  }
+
+  onNameChange(): any {
+    this.userName.setValidators([Validators.required]);
+    this.userName.updateValueAndValidity();
   }
 }

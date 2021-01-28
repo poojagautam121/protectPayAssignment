@@ -1,28 +1,33 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center top" fxLayoutAlign.xs="center stretch" fxLayoutAlign.xs="center stretch">
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
 </div>
-<div>
-<form [formGroup]="userForm">
-<div>
-  <mat-form-field class="example-full-width">
-    <mat-label>Enter Name</mat-label>
-    <input matInput placeholder="Name" value="" formControlName="userName">
-  </mat-form-field>
-  
-
+ 
+<div style="text-align:center" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center top" fxLayoutAlign.xs="center stretch">
+  <div fxFlex="50%">
+  <mat-form-field>
+    <input matInput [formControl]="userName"
+            placeholder="Enter Name" (change)="onNameChange()">
+    <mat-error
+            *ngIf="(userName.dirty || userName.touched) &&
+            userName.invalid">
+            {{userName?.errors?.required ? validationMessages.userName.required : ''}}
+                                                      
+    </mat-error>
+</mat-form-field>
 </div>
-<div>
+
+<div fxFlex="50%">
   <button mat-raised-button color="primary" (click)="onSubmit()">Search</button>
 </div>
-</form>
 </div>
 
-<div *ngIf="isDetail">
-  <h2>Deails By Name :</h2>
+<div *ngIf="isDetail" style="text-align:center">
+  <h2>Details By Name :</h2>
   <div >
-    <table>
+    <table class="formAlign">
       <tr>
         <th>Name</th>
         <th>Age</th>
@@ -36,5 +41,6 @@
     </table>
 
   </div>
+</div>
 </div>
 <router-outlet></router-outlet>
