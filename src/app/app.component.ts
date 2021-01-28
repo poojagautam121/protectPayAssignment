@@ -6,6 +6,13 @@ import {
   FormControl,
 } from "@angular/forms";
 import { AppService } from "./app.service";
+import { MatTableDataSource } from "@angular/material";
+
+export interface PeriodicElement {
+  name: string;
+  age: number;
+  count: number;
+}
 
 @Component({
   selector: "app-root",
@@ -14,8 +21,11 @@ import { AppService } from "./app.service";
 })
 export class AppComponent implements OnInit {
   title = "nameApp";
-  details: any;
+  details: any = [];
   isDetail: boolean = false;
+  dataSource: any;
+
+  displayedColumns: string[] = ["name", "age", "count"];
 
   userName = new FormControl("", [Validators.required]);
 
@@ -37,14 +47,15 @@ export class AppComponent implements OnInit {
       this.getAllCommits();
     } else {
       this.isDetail = false;
+      this.dataSource = new MatTableDataSource([]);
     }
   }
 
   getAllCommits(): void {
     this.appService.getDetails().subscribe((response: any) => {
-      this.details = response;
+      this.details.push(response);
+      this.dataSource = new MatTableDataSource(this.details);
       this.isDetail = true;
-      console.log(this.details);
     });
   }
 

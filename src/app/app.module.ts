@@ -8,6 +8,7 @@ import { MaterialModule } from "./shared/material/material.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AppService } from "./app.service";
 import { HttpClientModule } from "@angular/common/http";
+import { MatTableModule } from "@angular/material";
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,8 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserAnimationsModule,
     MaterialModule, // Material module is added
     ReactiveFormsModule, // Used for Forms
-    HttpClientModule, //for api
+    HttpClientModule, //for api,
+    MatTableModule, // for table
   ],
   providers: [AppService],
   bootstrap: [AppComponent],
