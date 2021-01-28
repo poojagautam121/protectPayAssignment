@@ -13,7 +13,8 @@
     <mat-error
             *ngIf="(userName.dirty || userName.touched) &&
             userName.invalid">
-            {{userName?.errors?.required ? validationMessages.userName.required : ''}}
+            {{userName?.errors?.required ? validationMessages.userName.required : 
+              ( userName?.errors?.pattern ? 'Invalid username' : '')}}
                                                       
     </mat-error>
 </mat-form-field>

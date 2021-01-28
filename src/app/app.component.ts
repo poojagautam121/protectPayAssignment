@@ -24,10 +24,14 @@ export class AppComponent implements OnInit {
   details: any = [];
   isDetail: boolean = false;
   dataSource: any;
+  pattern: any = "/^[a-zA-Z '.-]*$/";
 
   displayedColumns: string[] = ["name", "age", "count"];
 
-  userName = new FormControl("", [Validators.required]);
+  userName = new FormControl("", [
+    Validators.required,
+    Validators.pattern(this.pattern),
+  ]);
 
   validationMessages: { [key: string]: { [key: string]: string } };
 
@@ -60,7 +64,10 @@ export class AppComponent implements OnInit {
   }
 
   onNameChange(): any {
-    this.userName.setValidators([Validators.required]);
+    this.userName.setValidators([
+      Validators.required,
+      Validators.pattern(this.pattern),
+    ]);
     this.userName.updateValueAndValidity();
   }
 }
